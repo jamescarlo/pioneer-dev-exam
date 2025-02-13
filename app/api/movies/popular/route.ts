@@ -1,5 +1,5 @@
 import { Movie } from '@/types/movies/movie'
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 
 type Dates = {
   maximum: string
@@ -14,7 +14,7 @@ type PopularResponse = {
   total_results: number
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const response = await fetch(
       `${process.env.TMDB_API_URL}/3/movie/popular?api_key=${process.env.TMDB_API_KEY}`

@@ -1,5 +1,5 @@
 import { Movie } from '@/types/movies/movie'
-import { NextResponse, NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 type Dates = {
   maximum: string
@@ -14,13 +14,11 @@ type PopularResponse = {
   total_results: number
 }
 
-type Params = {
-  params: {
-    id: string
-  }
-}
-
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  res: NextResponse,
+  { params }: { params: { id: string } }
+) {
   try {
     const { id } = await params
 

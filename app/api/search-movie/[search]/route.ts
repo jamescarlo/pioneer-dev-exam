@@ -20,7 +20,11 @@ type Params = {
   }
 }
 
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  res: NextResponse,
+  { params }: Params
+) {
   try {
     const { search } = await params
 
