@@ -14,20 +14,17 @@ type PopularResponse = {
   total_results: number
 }
 
-export async function GET(
-  req: NextRequest,
-  res: NextResponse,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest) {
   try {
-    const { id } = await params
+    const { searchParams } = new URL(req.url)
+    const id = searchParams.get('id')
 
-    if (!params) {
+    if (!id) {
       return NextResponse.json({ error: 'No ID is present in request.' })
     }
 
     const response = await fetch(
-      `${process.env.TMDB_API_URL}/3/movie/${id}/videos?api_key=${process.env.TMDB_API_KEY}`
+      `${process.env.TMDB_API_URL}/3/movie/${id}?api_key=${process.env.TMDB_API_KEY}`
     )
     if (!response.ok) {
       return NextResponse.json(response.json())

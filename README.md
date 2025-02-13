@@ -100,4 +100,4 @@ root
 
 ## Live Preview
 
-- [Movie Hub](https://movie-hub-one-phi.vercel.app/)
+- [Movie Hub](https://vercel.com/james-carlos-projects-fdde533b/pioneer-dev-exam-moviehub/CgVXWEFiyq1ifPxiu5ceL3AQM1UM)

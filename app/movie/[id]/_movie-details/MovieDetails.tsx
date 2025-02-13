@@ -15,32 +15,35 @@ function MovieDetails({ id }: Props) {
   const [isVideoPending, startVideoTransition] = useTransition()
   const [data, setData] = useState<MovidetailsType | null>(null)
   const [trailer, setTrailer] = useState<Video | null>(null)
+  const [hasError, setHasError] = useState<boolean>(false)
 
   const fetchNowPlaying = async () => {
-    const response = await fetch(`/api/movies/${id}`)
+    const response = await fetch(`/api/movies/?id=${id}`)
     const data = await response.json()
 
     startMovieTransition(() => {
-      if (data) {
+      if (!data.error) {
         setData(data)
       }
     })
   }
 
   const fetchTrailer = async () => {
-    const response = await fetch(`/api/trailer/${id}`)
+    const response = await fetch(`/api/trailer/?id=${id}`)
     const data = await response.json()
 
     startVideoTransition(() => {
-      if (data.results.length) {
-        const trailer = data.results.find(
-          (result: Video) =>
-            result.type === 'Trailer' || result.type === 'Teaser'
-        )
+      if (data.error) {
+        setHasError(true)
+        return
+      }
 
-        if (trailer) {
-          setTrailer(trailer)
-        }
+      const trailer = data.results.find(
+        (result: Video) => result.type === 'Trailer' || result.type === 'Teaser'
+      )
+
+      if (trailer) {
+        setTrailer(trailer)
       }
     })
   }
@@ -52,6 +55,12 @@ function MovieDetails({ id }: Props) {
 
   return (
     <div>
+      {hasError && (
+        <p className='text-white text-center text-2xl h-screen flex items-center justify-center'>
+          Oops, sorry something went wrong.
+        </p>
+      )}
+
       {isMoviePending || isVideoPending ? (
         <div className='flex flex-col gap-y-4 max-w-5xl mx-auto justify-center items-start my-20'>
           <Skeleton className='w-full h-[480px] rounded-lg' />
