@@ -1,15 +1,20 @@
 'use client'
 
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Search } from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
-import { Collection } from '@/types/collection'
+import { Input } from '@/components/ui/input'
 import { TMDB_IMAGE_PATH } from '@/lib/constants'
+import { Collection } from '@/types/collection'
+import { Search } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 function Header() {
+  const path = usePathname()
+  const router = useRouter()
+
   const [searchResults, setSearchResults] = useState<Collection[] | null>(null)
 
   const handleSearch = (search: string) => {
@@ -92,12 +97,16 @@ function Header() {
             variant='link'
             className='text-white'
             onClick={() => {
-              document
-                .getElementById('popular')
-                ?.scrollIntoView({ behavior: 'smooth' })
+              if (path === '/') {
+                document
+                  .getElementById('popular')
+                  ?.scrollIntoView({ behavior: 'smooth' })
+              } else {
+                router.push('/')
+              }
             }}
           >
-            Popular now
+            {path === '/' ? 'Popular now' : 'Home'}
           </Button>
         </div>
       </div>
