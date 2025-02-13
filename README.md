@@ -95,6 +95,8 @@ root
 - This project uses the TMDB API to fetch data
 - The API key is stored in the `.env.local` file
 - The project is hosted on Vercel
+- The homepage utilizes server actions to fetch data for demonstration purposes.
+- This project does not use any state management library, just pure react via useTransition, useEffect, useState, etc.
 
 ## Live Preview
 
